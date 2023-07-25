@@ -1,7 +1,7 @@
 # python-slider-allocation-budgeting-tool
 Budget Forecast App
 
-This application calculates and forecasts budget based on transaction data for various categories. Offering a better understanding and macro perspective of which months certain categories are higher/lower to better prepare/budget. It takes transaction data as input, calculates the monthly totals, and produces an HTML report that includes an overview of the total amounts spent per category, and a detailed monthly breakdown. 
+This application calculates and forecasts budget based on transaction data for various categories. Offering a better understanding and macro perspective of which months certain categories are higher/lower to better prepare/budget. It takes transaction data as input, calculates the monthly totals, and produces an HTML report that includes an overview of the total amounts spent per category, and a detailed monthly breakdown. It differentiation from a pivot table is that it offers an interactive slider bar to allocate money based on the set amount of your actual budget, or a custom amount for each category/month within that category.
 
 Features:
 - Monthly totals calculation: The application calculates the monthly totals for each category.
