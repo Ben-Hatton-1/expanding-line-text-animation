@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Forecast Report</title>
+    <style>
+        body {
+            font-family: 'Rubik', sans-serif;
+            color: #000000;
+        }
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #FFFFFF;
+        }
+        th, td {
+            border: 1px solid #000000;
+            text-align: left;
+            padding: 5px;
+            color: #000000;
+        }
+        th {
+            background-color: #85BB65;
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+        .dropdown-btn {
+            margin-right: 5px;
+        }
+        .category-row.highlight {
+            background-color: #FFCC33;
+        }
+        .monthly-data {
+            display: none;
+            margin-top: 10px;
+            border: 1px solid #000000;
+            width: 100%;
+        }
+        .budget-slider {
+            width: 60%;
+        }
+        .budget-display {
+            font-size: 15px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .lock-btn {
+            background: none;
+            border: none;
+            color: #85BB65;
+        }
+        .lock-btn.locked {
+            color: #FA384C;
+        }
+    </style>
+    <script>
+    var totalBudget = 0;
+    var lockedBudget = 0;
+
+    function updateMonthlyBudget(slider) {
+        var display = slider.nextSibling;
+        display.innerText = slider.value;
+
+        calculateMonthlyTotals();
+        distributeBudget(slider);
+    }
+
+    function toggleLock(button) {
+        button.classList.toggle("locked");
+
+        if (button.innerText === "🔓") {
+            button.innerText = "🔒";
+        } else {
+            button.innerText = "🔓";
+        }
+
+        calculateMonthlyTotals();
+        distributeBudget();
+    }
+
+    function calculateMonthlyTotals() {
+        var sliders = document.getElementsByClassName("budget-slider");
+        totalBudget = parseFloat(document.getElementById("total-budget").innerText.replace(/[^0-9.-]+/g,""));
+        lockedBudget = 0;
+
+        for (var i = 0; i < sliders.length; i++) {
+            if (sliders[i].nextSibling.nextSibling.classList.contains("locked")) {
+                lockedBudget += parseFloat(sliders[i].value);
+            }
+        }
+    }
+
+    function distributeBudget(excludeSlider) {
+        var sliders = document.getElementsByClassName("budget-slider");
+        var remainingBudget = totalBudget - lockedBudget;
+        var unlockedSliders = [];
+
+        for (var i = 0; i < sliders.length; i++) {
+            if (!sliders[i].nextSibling.nextSibling.classList.contains("locked") && sliders[i] !== excludeSlider) {
+                unlockedSliders.push(sliders[i]);
+            }
+        }
+
+        var budgetPerSlider = remainingBudget / unlockedSliders.length;
+
+        for (var i = 0; i < unlockedSliders.length; i++) {
+            unlockedSliders[i].value = budgetPerSlider;
+            unlockedSliders[i].nextSibling.innerText = budgetPerSlider.toFixed(0);
+        }
+    }
+
+    function calculateTotals() {
+        var table = document.getElementById("budget-table-body");
+        var rows = table.rows;
+        var totalAmount = 0;
+        var totalBudget = 0;
+
+        for (var i = 0; i < rows.length; i++) {
+            var amount = parseFloat(rows[i].cells[1].innerText.replace(/[^0-9.-]+/g,""));
+            totalAmount += amount;
+
+            var budget = parseFloat(rows[i].cells[3].firstChild.value);
+            totalBudget += budget;
+        }
+
+        document.getElementById("total-amount").innerText = '$' + totalAmount.toFixed(0);
+        document.getElementById("total-budget").innerText = '$' + totalBudget.toFixed(0);
+
+        calculatePercentages();
+    }
+
+    function calculatePercentages() {
+        var table = document.getElementById("budget-table-body");
+        var rows = table.rows;
+        var totalAmount = parseFloat(document.getElementById("total-amount").innerText.replace(/[^0-9.-]+/g,""));
+
+        for (var i = 0; i < rows.length; i++) {
+            var amount = parseFloat(rows[i].cells[1].innerText.replace(/[^0-9.-]+/g,""));
+            var percentage = (amount / totalAmount) * 100;
+            rows[i].cells[2].innerText = percentage.toFixed(2) + '%';
+        }
+    }
+
+    function calculateBudgetTotals() {
+        var table = document.getElementById("budget-table-body");
+        var rows = table.rows;
+        var totalBudget = 0;
+
+        for (var i = 0; i < rows.length; i++) {
+            var budget = parseFloat(rows[i].cells[3].firstChild.value);
+            totalBudget += budget;
+        }
+
+        document.getElementById("total-budget").innerText = '$' + totalBudget.toFixed(0);
+
+        calculateNewPercentages(totalBudget);
+    }
+
+    function calculateNewPercentages(totalBudget) {
+        var table = document.getElementById("budget-table-body");
+        var rows = table.rows;
+
+        for (var i = 0; i < rows.length; i++) {
+            var budget = parseFloat(rows[i].cells[3].firstChild.value);
+            var percentage = (budget / totalBudget) * 100;
+            rows[i].cells[4].innerText = percentage.toFixed(2) + '%';
+        }
+    }
+
+    function updateBudget(input) {
+        input.value = parseFloat(input.value).toFixed(0);  // Ensure the input value is a number
+        calculateBudgetTotals();
+    }
+
+    window.onload = function() {
+        calculateTotals();
+        calculateBudgetTotals();
+    };
+
+    function sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("budget-table-body");
+        var sortBy = document.getElementById("sort-by").value;
+
+        var columnIndex;
+        switch(sortBy) {
+            case "alphabetically":
+                columnIndex = 0;
+                break;
+            case "high-low":
+                columnIndex = 1;
+                break;
+            case "low-high":
+                columnIndex = 1;
+                break;
+            default:
+                columnIndex = 0;
+        }
+
+        switching = true;
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 0; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[columnIndex];
+                y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+                if (sortBy === "high-low") {
+                    if (Number(x.innerHTML.replace(/[^0-9.-]+/g,"")) < Number(y.innerHTML.replace(/[^0-9.-]+/g,""))) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (sortBy === "low-high") {
+                    if (Number(x.innerHTML.replace(/[^0-9.-]+/g,"")) > Number(y.innerHTML.replace(/[^0-9.-]+/g,""))) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+
+    function showMonthlyData(button) {
+        var categoryRow = button.parentNode.parentNode;
+        var monthlyData = button.nextSibling.nextSibling;
+
+        var isOpen = monthlyData.style.display === "block";
+
+        var allMonthlyData = document.getElementsByClassName("monthly-data");
+        for (var i = 0; i < allMonthlyData.length; i++) {
+            allMonthlyData[i].style.display = "none";
+        }
+
+        var allCategoryRows = document.getElementsByClassName("category-row");
+        for (var i = 0; i < allCategoryRows.length; i++) {
+            allCategoryRows[i].classList.remove("highlight");
+        }
+
+        if (!isOpen) {
+            monthlyData.style.display = "block";
+            categoryRow.classList.add("highlight");
+        }
+    }
+</script>
+
+</head>
+<body>
+    <div class="container">
+        <h1 style="font-size: 30px; text-align: center;">2023 Budget</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category
+                        <select id="sort-by" onchange="sortTable()">
+                            <option value="alphabetically">Alphabetically</option>
+                            <option value="high-low">Total Amount High - Low</option>
+                            <option value="low-high">Total Amount Low - High</option>
+                        </select>
+                    </th>
+                    <th>Total Amount</th>
+                    <th>Percentage</th>
+                    <th>Next Year's Budget</th>
+                    <th>New Percentage</th>
+                </tr>
+            </thead>
+            <tbody id="budget-table-body">
+                {% for data in category_totals %}
+                    <tr class="category-row">
+                        <td>
+                            <button class="dropdown-btn" onclick="showMonthlyData(this)">▼</button>
+                            {{ data.Category }}
+                            <table class="monthly-data">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>Amount Spent in 2022</th>
+                                        <th>Budget for 2023</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   {% for month, amount in monthly_totals[data.Category].items() %}
+    <tr>
+        <td>{{ month }}</td>
+        <td>${{ amount|int }}</td>
+        <td>
+            <input type="range" min="0" max="{{ data.Amount|int }}" value="{{ amount|int }}" class="budget-slider" oninput="updateMonthlyBudget(this)">
+            <span class="budget-display">{{ amount|int }}</span>
+            <button class="lock-btn" onclick="toggleLock(this)">🔓</button>
+        </td>
+        <td class="new-percentage"></td>
+    </tr>
+{% endfor %}
+
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>${{ data.Amount|int }}</td>
+                        <td>{{ ((data.Amount / total_amount) * 100)|round(2) }}%</td>
+                        <td>
+                            <input type="number" class="budget-input" value="{{ data.Amount|int }}" min="0" max="200000" oninput="updateBudget(this)">
+                        </td>
+                        <td class="new-percentage"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td id="total-amount"></td>
+                    <td></td>
+                    <td id="total-budget"></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+</html>
+
