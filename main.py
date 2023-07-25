@@ -1,0 +1,126 @@
+import pandas as pd
+from datetime import datetime
+from jinja2 import Environment, FileSystemLoader
+
+def month_name(month_number):
+    return datetime(year=1, month=month_number, day=1).strftime('%B')
+
+def calculate_monthly_totals(df):
+    previous_year = datetime.now().year - 1
+    df['Date'] = pd.to_datetime(df['Date'])
+    df_prev_year = df[df['Date'].dt.year == previous_year]
+
+    category_totals = df_prev_year.groupby('Category')['Amount'].sum().reset_index()
+
+    category_monthly_totals = df_prev_year.groupby(['Category', df_prev_year['Date'].dt.month])['Amount'].sum().reset_index()
+    category_monthly_totals.columns = ['Category', 'Month', 'Amount']
+
+    category_monthly_totals_pivot = category_monthly_totals.pivot_table(index='Category', columns='Month', values='Amount', fill_value=0).reset_index()
+
+    result = pd.merge(category_totals, category_monthly_totals_pivot, on='Category')
+
+    month_names = {i: month_name(i) for i in range(1, 13)}
+    result.rename(columns=month_names, inplace=True)
+
+    ordered_cols = ['Category'] + [month_name(i) for i in range(1, 13)]
+    result = result.reindex(columns=ordered_cols)
+
+    return result, category_totals, category_monthly_totals
+
+def calculate_next_year_budget(df, category_totals):
+    next_year_budget = category_totals.copy()
+    next_year_budget.rename(columns={'Amount': 'NextYearBudget'}, inplace=True)
+    df_with_budget = pd.merge(df, next_year_budget, on='Category', how='left')
+    return df_with_budget, next_year_budget
+
+def print_monthly_totals(monthly_totals):
+    print("Monthly Totals:")
+    print(monthly_totals.to_string(index=False))
+    print("\n")
+
+def print_total_yearly_amount(category_totals):
+    total_yearly_amount = category_totals['Amount'].sum()
+    print(f"Total Yearly Amount: ${total_yearly_amount:,.2f}")
+    print("\n")
+
+def render_html_report(template_path, summary_data, monthly_totals, total_next_year_budget, next_year_budget_dict):
+    def intcomma(value):
+        return f'{value:,}'
+
+    def intcomma_float(value):
+        return f'{value:,.0f}'
+
+    month_names = [month_name(month) for month in range(1, 13)]
+
+    env = Environment(loader=FileSystemLoader('.'))
+    env.filters['intcomma'] = intcomma
+    env.filters['intcomma_float'] = intcomma_float
+    template = env.get_template(template_path)
+
+    total_amount = sum(summary_data['Amount'])
+
+    category_totals = []
+    for _, row in summary_data.iterrows():
+        percentage = (row['Amount'] / total_amount) * 100
+        category_totals.append({
+            'Category': row['Category'],
+            'Amount': row['Amount'],
+            'Percentage': percentage
+        })
+
+    monthly_totals_dict = {}
+    for _, row in monthly_totals.iterrows():
+        if row['Category'] not in monthly_totals_dict:
+            monthly_totals_dict[row['Category']] = {}
+        for month in month_names:    # Use month_names instead of range(1, 13)
+            monthly_totals_dict[row['Category']][month] = row[month]
+
+    report_html = template.render(
+        category_totals=category_totals,
+        total_amount=total_amount,
+        month_names=month_names,
+        monthly_totals=monthly_totals_dict,
+        total_amount_float=float(total_amount),
+        next_year_budget=df_next_year_budget,
+        total_next_year_budget=total_next_year_budget,
+        max_budget=next_year_budget_dict
+    )
+
+    return report_html
+
+file_path = '/Users/benhatton/Desktop/Mint_Transactions.xlsx'
+dfs = pd.read_excel(file_path, sheet_name=None)
+
+monthly_totals_dict = {}
+category_totals_dict = {}
+category_monthly_totals_dict = {}
+next_year_budget_dict = {}    # added
+for sheet_name, df in dfs.items():
+    monthly_totals, category_totals, category_monthly_totals = calculate_monthly_totals(df)
+    monthly_totals_dict[sheet_name] = monthly_totals
+    category_totals_dict[sheet_name] = category_totals
+    category_monthly_totals_dict[sheet_name] = category_monthly_totals
+
+df_next_year_budget_dict = {}
+total_next_year_budget = 0
+for sheet_name, df in dfs.items():
+    category_totals = category_totals_dict[sheet_name]
+    df_next_year_budget, next_year_budget = calculate_next_year_budget(df, category_totals)    # updated
+    df_next_year_budget_dict[sheet_name] = df_next_year_budget
+    next_year_budget_dict[sheet_name] = next_year_budget    # added
+    total_next_year_budget += df_next_year_budget['NextYearBudget'].sum()
+
+html_report = render_html_report('report_template.html', category_totals, monthly_totals, total_next_year_budget, next_year_budget_dict)    # updated
+
+monthly_totals = pd.concat(monthly_totals_dict.values())
+category_totals = pd.concat(category_totals_dict.values())
+category_monthly_totals = pd.concat(category_monthly_totals_dict.values())
+df_next_year_budget = pd.concat(df_next_year_budget_dict.values())
+
+print_monthly_totals(monthly_totals)
+print_total_yearly_amount(category_totals)
+
+html_report = render_html_report('report_template.html', category_totals, monthly_totals, total_next_year_budget, next_year_budget_dict)    # updated
+
+with open('budget_forecast_report.html', 'w') as f:
+    f.write(html_report)
