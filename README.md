@@ -13,7 +13,7 @@ Features:
 - Lock/Unlock: Each month's budget can be locked to prevent it from being adjusted automatically when other budgets are adjusted.
 
 How to Use:
-Prepare your transaction data in Excel format. (A. Date B. Desciption C. Amount D. Category)
+Prepare your transaction data in Excel format. (A. "Date" B. "Desciption" C. "Amount" D. "Category")
 Run the Python script. It will read the transaction data, calculate the monthly totals, and generate the HTML report.
 Open the generated budget_forecast_report.html file in a web browser to view the report and adjust the budgets as needed.
 
