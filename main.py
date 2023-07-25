@@ -88,13 +88,13 @@ def render_html_report(template_path, summary_data, monthly_totals, total_next_y
 
     return report_html
 
-file_path = '/Users/benhatton/Desktop/Mint_Transactions.xlsx'
+file_path = '#excel_file_name.xlsx'
 dfs = pd.read_excel(file_path, sheet_name=None)
 
 monthly_totals_dict = {}
 category_totals_dict = {}
 category_monthly_totals_dict = {}
-next_year_budget_dict = {}    # added
+next_year_budget_dict = {}
 for sheet_name, df in dfs.items():
     monthly_totals, category_totals, category_monthly_totals = calculate_monthly_totals(df)
     monthly_totals_dict[sheet_name] = monthly_totals
@@ -105,12 +105,12 @@ df_next_year_budget_dict = {}
 total_next_year_budget = 0
 for sheet_name, df in dfs.items():
     category_totals = category_totals_dict[sheet_name]
-    df_next_year_budget, next_year_budget = calculate_next_year_budget(df, category_totals)    # updated
+    df_next_year_budget, next_year_budget = calculate_next_year_budget(df, category_totals)
     df_next_year_budget_dict[sheet_name] = df_next_year_budget
-    next_year_budget_dict[sheet_name] = next_year_budget    # added
+    next_year_budget_dict[sheet_name] = next_year_budget
     total_next_year_budget += df_next_year_budget['NextYearBudget'].sum()
 
-html_report = render_html_report('report_template.html', category_totals, monthly_totals, total_next_year_budget, next_year_budget_dict)    # updated
+html_report = render_html_report('report_template.html', category_totals, monthly_totals, total_next_year_budget, next_year_budget_dict)
 
 monthly_totals = pd.concat(monthly_totals_dict.values())
 category_totals = pd.concat(category_totals_dict.values())
@@ -120,7 +120,7 @@ df_next_year_budget = pd.concat(df_next_year_budget_dict.values())
 print_monthly_totals(monthly_totals)
 print_total_yearly_amount(category_totals)
 
-html_report = render_html_report('report_template.html', category_totals, monthly_totals, total_next_year_budget, next_year_budget_dict)    # updated
+html_report = render_html_report('report_template.html', category_totals, monthly_totals, total_next_year_budget, next_year_budget_dict)
 
 with open('budget_forecast_report.html', 'w') as f:
     f.write(html_report)
