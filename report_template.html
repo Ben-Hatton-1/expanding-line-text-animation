@@ -1,335 +1,671 @@
+/* template */
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Forecast Report</title>
+    <title>Financial Dashboard</title>
     <style>
+        /* Add your CSS styles here */
         body {
-            font-family: 'Rubik', sans-serif;
-            color: #000000;
+            font-family: Arial, sans-serif;
         }
-        .container {
-            width: 90%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            background-color: #FFFFFF;
-        }
-        th, td {
-            border: 1px solid #000000;
-            text-align: left;
-            padding: 5px;
-            color: #000000;
-        }
-        th {
-            background-color: #85BB65;
-            color: #FFFFFF;
-            font-weight: bold;
-        }
-        .dropdown-btn {
-            margin-right: 5px;
-        }
-        .category-row.highlight {
-            background-color: #FFCC33;
-        }
-        .monthly-data {
-            display: none;
-            margin-top: 10px;
-            border: 1px solid #000000;
-            width: 100%;
-        }
-        .budget-slider {
-            width: 60%;
-        }
-        .budget-display {
-            font-size: 15px;
-            margin-left: 5px;
-            margin-right: 5px;
-        }
-        .lock-btn {
-            background: none;
-            border: none;
-            color: #85BB65;
-        }
-        .lock-btn.locked {
-            color: #FA384C;
-        }
+
+        /* Further styling */
     </style>
+</head>
+<body>
+    <div id="app">
+<div style="width: 1440px; height: 1818px; position: relative; background: white">
+  <div style="height: 149px; padding-left: 96px; padding-right: 233px; left: -35px; top: 160px; position: absolute; background: white; justify-content: flex-start; align-items: center; display: inline-flex">
+    <div style="width: 1111px"><span style="color: black; font-size: 64px; font-family: Nunito; font-weight: 700; line-height: 76.80px; word-wrap: break-word">Hi </span><span style="color: #85BB65; font-size: 64px; font-family: Nunito; font-weight: 700; line-height: 76.80px; word-wrap: break-word">Ben</span><span style="color: black; font-size: 64px; font-family: Nunito; font-weight: 700; line-height: 76.80px; word-wrap: break-word"> 👋<br/>Here’s your budget for 2024!</span></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 470px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🚗 Auto & transport </div>
+    <div style="left: 679px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$6600</div>
+    <div style="left: 420px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$550</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+  </div>
+  <div style="left: 458px; top: 434px; position: absolute; text-align: right; color: black; font-size: 25px; font-family: Inter; font-weight: 800; line-height: 32.50px; word-wrap: break-word">Monthly</div>
+  <div style="left: 149px; top: 434px; position: absolute; text-align: right; color: black; font-size: 25px; font-family: Inter; font-weight: 800; line-height: 32.50px; word-wrap: break-word">Category</div>
+  <div style="left: 735px; top: 434px; position: absolute; text-align: right; color: black; font-size: 25px; font-family: Inter; font-weight: 800; line-height: 32.50px; word-wrap: break-word">Yearly</div>
+  <div style="width: 839px; height: 69px; left: 62px; top: 539px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">👕 Clothing</div>
+    <div style="left: 678px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$1200</div>
+    <div style="left: 420px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$100</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 608px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🥲 Counseling</div>
+    <div style="left: 681px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$1800</div>
+    <div style="left: 424px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$150</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 677px; position: absolute; background: #EDF5E8; border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🌹 Date night</div>
+    <div style="left: 680px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$1200</div>
+    <div style="left: 419px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$100</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 746px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🎁 Gift</div>
+    <div style="left: 677px; top: 22px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$1200</div>
+    <div style="left: 412px; top: 22px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$100</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 61.26px; top: 40.96px; position: absolute; transform: rotate(-180deg); transform-origin: 0 0; background: #292D32"></div>
+    <div style="width: 32px; height: 32px; padding-top: 7.86px; padding-bottom: 7.65px; padding-left: 8.40px; padding-right: 7.11px; left: 462px; top: 19px; position: absolute; justify-content: center; align-items: center; display: inline-flex">
+      <img style="width: 16.50px; height: 16.50px" src="https://via.placeholder.com/16x16" />
+    </div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 59px; top: 1465px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🥦 Groceries</div>
+    <div style="left: 691px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$18000</div>
+    <div style="left: 378px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$1500</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 59px; top: 1534px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🏋️‍ ‍‍️Gym️</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$600</div>
+    <div style="left: 386px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$50</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 59px; top: 1603px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🧻 Home needs</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$6600</div>
+    <div style="left: 377px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$550</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 60px; top: 1672px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🖼️ Home wants</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 59px; top: 1741px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">👨🏻‍⚕️ Medical care</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 53px; height: 0px; left: 381px; top: 478px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  <div style="width: 53px; height: 0px; left: 381px; top: 547px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  <div style="width: 53px; height: 0px; left: 381px; top: 616px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  <div style="width: 53px; height: 0px; left: 382px; top: 685px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  <div style="width: 53px; height: 0px; left: 381px; top: 754px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  <div style="width: 839px; height: 69px; left: 59px; top: 1810px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🩺 Medical supplies</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 1879px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="width: 228px; left: 87px; top: 12px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 22px; word-wrap: break-word">🤷‍ ️Miscellaneous expenses</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 1948px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">📱 Mobile phone</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 2017px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🏠 Mortgage & rent</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 2086px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">✈️ Necessary travel</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 2155px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="width: 210px; left: 87px; top: 12px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 22px; word-wrap: break-word">💍 Personal articles insurance</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 2224px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">💆‍ Personal care</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 2293px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🍽️ Restaurants </div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 2362px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">💰 Savings/Investing</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 59px; top: 2431px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">📬 Subscriptions</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 59px; top: 2500px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">💊 Supplements</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 59px; top: 2569px; position: absolute; background: rgba(133, 187, 101, 0.15); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">🏖️️ Vacation</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 45px; height: 45px; left: 26px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+    <div style="width: 24.26px; height: 12.96px; left: 37px; top: 28px; position: absolute; background: #292D32"></div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="width: 839px; height: 69px; left: 61px; top: 2638px; position: absolute; background: #85BB65; border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="left: 88px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Grand total</div>
+    <div style="left: 690px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$2400</div>
+    <div style="left: 376px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+    <div style="width: 53px; height: 0px; left: 322px; top: 8px; position: absolute; transform: rotate(90deg); transform-origin: 0 0; border: 1px black solid"></div>
+  </div>
+  <div style="padding-left: 20px; padding-right: 20px; padding-top: 16px; padding-bottom: 16px; left: 61px; top: 339px; position: absolute; background: #FFF2CC; border-radius: 20px; overflow: hidden; border: 2px #939393 solid; justify-content: center; align-items: center; display: inline-flex">
+    <div style="color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Fixed budget</div>
+  </div>
+  <div style="padding-left: 19px; padding-right: 19px; padding-top: 16px; padding-bottom: 16px; left: 235px; top: 339px; position: absolute; background: rgba(255, 255, 255, 0.10); border-radius: 20px; overflow: hidden; border: 2px #FFF2CC solid; justify-content: center; align-items: center; display: inline-flex">
+    <div style="color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Custom budget</div>
+  </div>
+  <div style="width: 397px; height: 470px; left: 976px; top: 470px; position: absolute; background: #FAFAF5; border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+    <div style="width: 373px; height: 38px; left: 24px; top: 24px; position: absolute; color: black; font-size: 35px; font-family: Nunito; font-weight: 600; line-height: 45.50px; word-wrap: break-word">Ask me anything! 🤖</div>
+    <div style="width: 349px; height: 69px; left: 21px; top: 383px; position: absolute; background: white; border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+      <div style="width: 173px; height: 23px; left: 24px; top: 23px; position: absolute; color: black; font-size: 20px; font-family: Nunito; font-weight: 400; line-height: 26px; word-wrap: break-word">Send a message...</div>
+      <div style="width: 45px; height: 45px; left: 269px; top: 12px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+      <div style="width: 23px; height: 20px; left: 282px; top: 46px; position: absolute; transform: rotate(-90deg); transform-origin: 0 0; background: #292D32"></div>
+      <div style="width: 4px; height: 10px; left: 282px; top: 37px; position: absolute; transform: rotate(-90deg); transform-origin: 0 0; background: white"></div>
+    </div>
+    <div style="height: 78px; padding-top: 15px; padding-bottom: 40px; padding-left: 18px; padding-right: 15px; left: 18px; top: 107px; position: absolute; background: white; border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid; justify-content: center; align-items: center; display: inline-flex">
+      <div style="width: 316px; height: 23px; color: black; font-size: 20px; font-family: Nunito; font-weight: 400; line-height: 26px; word-wrap: break-word">Help me plan a budget for a dream vacation in June.</div>
+    </div>
+    <div style="height: 78px; padding-top: 15px; padding-bottom: 40px; padding-left: 18px; padding-right: 15px; left: 18px; top: 285px; position: absolute; background: white; border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid; justify-content: center; align-items: center; display: inline-flex">
+      <div style="width: 316px; height: 23px; color: black; font-size: 20px; font-family: Nunito; font-weight: 400; line-height: 26px; word-wrap: break-word">I want to save $300 more per month, what should I change?</div>
+    </div>
+    <div style="height: 78px; padding-top: 13px; padding-bottom: 40px; padding-left: 18px; padding-right: 20px; left: 18px; top: 196px; position: absolute; background: white; border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid; justify-content: center; align-items: center; display: inline-flex">
+      <div style="width: 311px; height: 25px; color: black; font-size: 20px; font-family: Nunito; font-weight: 400; line-height: 26px; word-wrap: break-word">Give me ideas for more categories I might be forgetting about.</div>
+    </div>
+  </div>
+  <div style="width: 1440px; height: 93px; left: 0px; top: 0px; position: absolute; background: rgba(133, 187, 101, 0.90)">
+    <div style="left: 64px; top: 30px; position: absolute; color: white; font-size: 32px; font-family: Rubik; font-weight: 500; line-height: 32px; word-wrap: break-word">ben-hatton.com</div>
+    <div style="left: 1204px; top: 33px; position: absolute; text-align: center; color: white; font-size: 20px; font-family: Inter; font-weight: 400; line-height: 26px; word-wrap: break-word">My profile</div>
+    <div style="left: 1084px; top: 33px; position: absolute; text-align: center; color: white; font-size: 20px; font-family: Inter; font-weight: 400; line-height: 26px; word-wrap: break-word">Settings</div>
+    <div style="left: 893px; top: 33px; position: absolute; text-align: center; color: white; font-size: 20px; font-family: Inter; font-weight: 400; line-height: 26px; word-wrap: break-word">Leave feedback</div>
+    <div style="width: 15px; height: 0px; left: 1185px; top: 54px; position: absolute; transform: rotate(-90deg); transform-origin: 0 0; border: 1px white solid"></div>
+    <div style="width: 15px; height: 0px; left: 1065px; top: 54px; position: absolute; transform: rotate(-90deg); transform-origin: 0 0; border: 1px white solid"></div>
+  </div>
+  <div style="width: 839px; height: 650px; left: 61px; top: 815px; position: absolute">
+    <div style="width: 839px; height: 650px; left: 0px; top: 0px; position: absolute; background: rgba(133, 187, 101, 0.05); border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+      <div style="left: 72px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Month</div>
+      <div style="left: 173px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Budget allocation</div>
+      <div style="left: 407px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Budget</div>
+      <div style="left: 641px; top: 21px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Last year’s spend</div>
+    </div>
+    <div style="width: 786px; height: 568px; left: 26px; top: 56px; position: absolute; background: white; border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid">
+      <div style="left: 60px; top: 21px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Jan</div>
+      <div style="left: 60px; top: 58px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Feb</div>
+      <div style="left: 60px; top: 95px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Mar</div>
+      <div style="left: 60px; top: 132px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Apr</div>
+      <div style="left: 60px; top: 169px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">May</div>
+      <div style="left: 60px; top: 206px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Jun</div>
+      <div style="left: 61px; top: 243px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Jul</div>
+      <div style="left: 61px; top: 280px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Aug</div>
+      <div style="left: 61px; top: 317px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Sep</div>
+      <div style="left: 61px; top: 354px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Oct</div>
+      <div style="left: 61px; top: 391px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Nov</div>
+      <div style="left: 61px; top: 428px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">Dec</div>
+      <div style="left: 669px; top: 16px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$120</div>
+      <div style="left: 387px; top: 13px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$200</div>
+      <div style="left: 669px; top: 55px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$235</div>
+      <div style="left: 387px; top: 55px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$100</div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 49px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 87px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="width: 171px; height: 12px; left: 142px; top: 30px; position: absolute">
+        <div style="width: 171px; height: 12px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+        <div style="width: 80px; height: 12px; left: 0px; top: 0px; position: absolute; background: #85BB65; border-radius: 20px"></div>
+      </div>
+      <div style="width: 171px; height: 94px; left: 142px; top: 64px; position: absolute">
+        <div style="width: 171px; height: 12px; left: 0px; top: 4px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+        <div style="width: 49px; height: 12px; left: 0px; top: 4px; position: absolute; background: #85BB65; border-radius: 20px"></div>
+        <div style="width: 20px; height: 20px; left: 29px; top: 0px; position: absolute; background: #FFCC33; border-radius: 9999px"></div>
+        <div style="width: 171px; height: 57px; left: 0px; top: 37px; position: absolute">
+          <div style="width: 171px; height: 12px; left: 0px; top: 4px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+          <div style="width: 20px; height: 20px; left: 0px; top: 0px; position: absolute; background: #FFCC33; border-radius: 9999px"></div>
+          <div style="width: 171px; height: 20px; left: 0px; top: 37px; position: absolute">
+            <div style="width: 171px; height: 12px; left: 0px; top: 4px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+            <div style="width: 20px; height: 20px; left: 0px; top: 0px; position: absolute; background: #FFCC33; border-radius: 9999px"></div>
+          </div>
+        </div>
+      </div>
+      <div style="width: 171px; height: 280px; left: 142px; top: 176px; position: absolute">
+        <div style="width: 171px; height: 12px; left: 0px; top: 4px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+        <div style="width: 143px; height: 12px; left: 0px; top: 4px; position: absolute; background: #85BB65; border-radius: 20px"></div>
+        <div style="width: 20px; height: 20px; left: 123px; top: 0px; position: absolute; background: #FFCC33; border-radius: 9999px"></div>
+        <div style="width: 171px; height: 57px; left: 0px; top: 37px; position: absolute">
+          <div style="width: 171px; height: 12px; left: 0px; top: 4px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+          <div style="width: 20px; height: 20px; left: 0px; top: 0px; position: absolute; background: #FFCC33; border-radius: 9999px"></div>
+          <div style="width: 171px; height: 20px; left: 0px; top: 37px; position: absolute">
+            <div style="width: 171px; height: 12px; left: 0px; top: 4px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+            <div style="width: 20px; height: 20px; left: 0px; top: 0px; position: absolute; background: #FFCC33; border-radius: 9999px"></div>
+          </div>
+        </div>
+        <div style="width: 171px; height: 166px; left: 0px; top: 114px; position: absolute">
+          <div style="width: 171px; height: 12px; left: 0px; top: 5px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+          <div style="width: 20px; height: 20px; left: 0px; top: 0px; position: absolute; background: #FFCC33; border-radius: 9999px"></div>
+          <div style="width: 171px; height: 57px; left: 0px; top: 37px; position: absolute">
+            <div style="width: 171px; height: 20px; left: 0px; top: 0px; position: absolute">
+              <div style="width: 171px; height: 12px; left: 0px; top: 4px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+              <div style="width: 20px; height: 20px; left: 0px; top: 0px; position: absolute; background: #FFCC33; border-radius: 9999px"></div>
+            </div>
+            <div style="width: 171px; height: 20px; left: 0px; top: 37px; position: absolute">
+              <div style="width: 171px; height: 12px; left: 0px; top: 4px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+              <div style="width: 20px; height: 20px; left: 0px; top: 0px; position: absolute; background: #FFCC33; border-radius: 9999px"></div>
+            </div>
+          </div>
+          <div style="width: 171px; height: 51px; left: 0px; top: 115px; position: absolute">
+            <div style="width: 171px; height: 12px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+            <div style="width: 171px; height: 20px; left: 0px; top: 31px; position: absolute">
+              <div style="width: 171px; height: 12px; left: 0px; top: 4px; position: absolute; background: #D9D9D9; border-radius: 20px"></div>
+              <div style="width: 171px; height: 12px; left: 0px; top: 4px; position: absolute; background: #85BB65; border-radius: 20px"></div>
+              <div style="width: 20px; height: 20px; left: 151px; top: 0px; position: absolute; background: #FFCC33; border-radius: 9999px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="left: 669px; top: 95px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 387px; top: 95px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 669px; top: 132px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$20</div>
+      <div style="left: 387px; top: 132px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 669px; top: 166px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$550</div>
+      <div style="left: 387px; top: 166px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$400</div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 162px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 125px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 198px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="left: 669px; top: 203px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 387px; top: 203px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 235px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="left: 669px; top: 240px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 387px; top: 240px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 669px; top: 281px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 387px; top: 281px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 669px; top: 317px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$25</div>
+      <div style="left: 387px; top: 317px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 313px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 274px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 349px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="left: 669px; top: 354px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 387px; top: 354px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 669px; top: 391px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 387px; top: 391px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="width: 291px; height: 45px; left: 45px; top: 470px; position: absolute; background: #E6E6E6; border-radius: 12px"></div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 386px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 423px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 1px black solid"></div>
+      <div style="width: 412px; height: 0px; left: 767px; top: 463px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; border: 5px black solid"></div>
+      <div style="left: 669px; top: 428px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$580</div>
+      <div style="left: 387px; top: 428px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$500</div>
+      <div style="left: 387px; top: 479px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$1000</div>
+      <div style="left: 285px; top: 479px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 900; line-height: 26px; word-wrap: break-word">$0</div>
+      <div style="left: 669px; top: 479px; position: absolute; text-align: right; color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$1530</div>
+      <div style="left: 60px; top: 528px; position: absolute; text-align: right"><span style="color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">You’re saving </span><span style="color: #85BB65; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word">$530</span><span style="color: black; font-size: 20px; font-family: Inter; font-weight: 600; line-height: 26px; word-wrap: break-word"> compared to last year with this budget. Great job! 🤩</span></div>
+      <div style="width: 19px; height: 22.17px; left: 142px; top: 395px; position: absolute; background: black"></div>
+      <div style="width: 19px; height: 22.17px; left: 212px; top: 20px; position: absolute; background: black"></div>
+    </div>
+  </div>
+  <div style="height: 11px; padding-top: 2px; padding-bottom: 2px; padding-left: 36px; padding-right: 2px; left: 0px; top: 1807px; position: absolute; justify-content: flex-end; align-items: center; display: inline-flex">
+    <div style="width: 1402px; height: 7px; background: rgba(0, 0, 0, 0.50); border-radius: 3.50px; border: 1px rgba(255, 255, 255, 0.15) solid"></div>
+  </div>
+  <div style="padding-top: 2px; padding-bottom: 940px; padding-right: 2px; left: 1429px; top: 0px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: center; display: inline-flex">
+    <div style="width: 9px; height: 876px; background: rgba(0, 0, 0, 0.50); border-radius: 3.50px; border: 1px rgba(255, 255, 255, 0.15) solid"></div>
+  </div>
+</div>
+        <!--  interactive elements below -->
+
+        <!-- For file upload -->
+        <input type="file" id="fileInput" name="file" />
+        <button onclick="uploadFile()">Upload File</button>
+
+        <!-- For chat messages -->
+        <input type="text" id="chatInput" placeholder="Ask me anything..." />
+        <button onclick="sendMessage()">Send</button>
+        <div id="chatOutput"></div>
+    </div>
+
     <script>
-    var totalBudget = 0;
-    var lockedBudget = 0;
+        // JavaScript functions to interact with the backend
 
-    function updateMonthlyBudget(slider) {
-        var display = slider.nextSibling;
-        display.innerText = slider.value;
+        function uploadFile() {
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('file', file);
 
-        calculateMonthlyTotals();
-        distributeBudget(slider);
-    }
-
-    function toggleLock(button) {
-        button.classList.toggle("locked");
-
-        if (button.innerText === "🔓") {
-            button.innerText = "🔒";
-        } else {
-            button.innerText = "🔓";
+            // AJAX request to upload the file
+            fetch('/process-budget', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Handle response data
+            }).catch(error => {
+                console.error('Error:', error);
+            });
         }
 
-        calculateMonthlyTotals();
-        distributeBudget();
-    }
+        function sendMessage() {
+            var chatInput = document.getElementById('chatInput');
+            var message = chatInput.value;
+            var data = { prompt: message };
 
-    function calculateMonthlyTotals() {
-        var sliders = document.getElementsByClassName("budget-slider");
-        totalBudget = parseFloat(document.getElementById("total-budget").innerText.replace(/[^0-9.-]+/g,""));
-        lockedBudget = 0;
-
-        for (var i = 0; i < sliders.length; i++) {
-            if (sliders[i].nextSibling.nextSibling.classList.contains("locked")) {
-                lockedBudget += parseFloat(sliders[i].value);
-            }
-        }
-    }
-
-    function distributeBudget(excludeSlider) {
-        var sliders = document.getElementsByClassName("budget-slider");
-        var remainingBudget = totalBudget - lockedBudget;
-        var unlockedSliders = [];
-
-        for (var i = 0; i < sliders.length; i++) {
-            if (!sliders[i].nextSibling.nextSibling.classList.contains("locked") && sliders[i] !== excludeSlider) {
-                unlockedSliders.push(sliders[i]);
-            }
+            // AJAX request to send the message
+            fetch('/chat-with-gpt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Append the response to chatOutput
+                var chatOutput = document.getElementById('chatOutput');
+                var responseElement = document.createElement('div');
+                responseElement.textContent = data.response;
+                chatOutput.appendChild(responseElement);
+            }).catch(error => {
+                console.error('Error:', error);
+            });
         }
 
-        var budgetPerSlider = remainingBudget / unlockedSliders.length;
+<script>
+  // Function to handle drag and drop file upload
+  function handleFileUpload(files) {
+    const formData = new FormData();
+    formData.append('file', files[0]);
 
-        for (var i = 0; i < unlockedSliders.length; i++) {
-            unlockedSliders[i].value = budgetPerSlider;
-            unlockedSliders[i].nextSibling.innerText = budgetPerSlider.toFixed(0);
-        }
+    fetch('/process-budget', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert('File uploaded and budget processed.');
+      // Reload or update the page content as necessary
+    })
+    .catch(error => {
+      console.error('Error uploading file:', error);
+    });
+  }
+
+  // Function to send messages to the chatbot
+  function sendMessage() {
+    const chatInput = document.getElementById('chatInput');
+    const message = chatInput.value;
+    const data = { prompt: message };
+
+    fetch('/chat-with-gpt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+      const chatOutput = document.getElementById('chatOutput');
+      const responseElement = document.createElement('div');
+      responseElement.textContent = data.response;
+      chatOutput.appendChild(responseElement);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+
+  // Function to handle the login process
+  function handleLogin() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Placeholder: Replace with actual login logic as needed
+    if (username === 'admin' && password === 'password') {
+      alert('Login successful!');
+      // Redirect to the main page or change the view
+    } else {
+      alert('Login failed!');
+    }
+  }
+
+  // Setup event listeners for drag and drop
+  const dropArea = document.getElementById('drop-area');
+  dropArea.addEventListener('dragover', (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
+  });
+
+  dropArea.addEventListener('drop', (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    const files = event.dataTransfer.files;
+    handleFileUpload(files);
+  });
+
+  // with an ID 'budgetForm' to update budget allocation
+    function updateBudget() {
+        const budgetForm = document.getElementById('budgetForm');
+        const formData = new FormData(budgetForm);
+
+        fetch('/update-budget', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Budget updated successfully.');
+            // Refresh the budget categories or other elements as needed
+        })
+        .catch(error => {
+            console.error('Error updating budget:', error);
+        });
     }
 
-    function calculateTotals() {
-        var table = document.getElementById("budget-table-body");
-        var rows = table.rows;
-        var totalAmount = 0;
-        var totalBudget = 0;
-
-        for (var i = 0; i < rows.length; i++) {
-            var amount = parseFloat(rows[i].cells[1].innerText.replace(/[^0-9.-]+/g,""));
-            totalAmount += amount;
-
-            var budget = parseFloat(rows[i].cells[3].firstChild.value);
-            totalBudget += budget;
-        }
-
-        document.getElementById("total-amount").innerText = '$' + totalAmount.toFixed(0);
-        document.getElementById("total-budget").innerText = '$' + totalBudget.toFixed(0);
-
-        calculatePercentages();
+    // Handle user logout
+    function handleLogout() {
+        // Perform necessary cleanup and redirect to the login page
+        alert('You have been logged out.');
+        window.location.href = '/login.html'; // Redirect to the login page
     }
 
-    function calculatePercentages() {
-        var table = document.getElementById("budget-table-body");
-        var rows = table.rows;
-        var totalAmount = parseFloat(document.getElementById("total-amount").innerText.replace(/[^0-9.-]+/g,""));
+    // Dynamically render budget categories based on data
+    function renderBudgetCategories(budgetData) {
+        const categoriesContainer = document.getElementById('categoriesContainer');
+        categoriesContainer.innerHTML = ''; // Clear existing categories
 
-        for (var i = 0; i < rows.length; i++) {
-            var amount = parseFloat(rows[i].cells[1].innerText.replace(/[^0-9.-]+/g,""));
-            var percentage = (amount / totalAmount) * 100;
-            rows[i].cells[2].innerText = percentage.toFixed(2) + '%';
-        }
+        budgetData.forEach(category => {
+            const categoryElement = document.createElement('div');
+            categoryElement.className = 'category';
+            categoryElement.innerHTML = `
+                <h3>${category.name}</h3>
+                <p>Allocated: $${category.allocated}</p>
+                <p>Spent: $${category.spent}</p>
+            `;
+            categoriesContainer.appendChild(categoryElement);
+        });
     }
 
-    function calculateBudgetTotals() {
-        var table = document.getElementById("budget-table-body");
-        var rows = table.rows;
-        var totalBudget = 0;
-
-        for (var i = 0; i < rows.length; i++) {
-            var budget = parseFloat(rows[i].cells[3].firstChild.value);
-            totalBudget += budget;
-        }
-
-        document.getElementById("total-budget").innerText = '$' + totalBudget.toFixed(0);
-
-        calculateNewPercentages(totalBudget);
-    }
-
-    function calculateNewPercentages(totalBudget) {
-        var table = document.getElementById("budget-table-body");
-        var rows = table.rows;
-
-        for (var i = 0; i < rows.length; i++) {
-            var budget = parseFloat(rows[i].cells[3].firstChild.value);
-            var percentage = (budget / totalBudget) * 100;
-            rows[i].cells[4].innerText = percentage.toFixed(2) + '%';
-        }
-    }
-
-    function updateBudget(input) {
-        input.value = parseFloat(input.value).toFixed(0);  // Ensure the input value is a number
-        calculateBudgetTotals();
-    }
-
-    window.onload = function() {
-        calculateTotals();
-        calculateBudgetTotals();
-    };
-
-    function sortTable() {
-        var table, rows, switching, i, x, y, shouldSwitch;
-        table = document.getElementById("budget-table-body");
-        var sortBy = document.getElementById("sort-by").value;
-
-        var columnIndex;
-        switch(sortBy) {
-            case "alphabetically":
-                columnIndex = 0;
-                break;
-            case "high-low":
-                columnIndex = 1;
-                break;
-            case "low-high":
-                columnIndex = 1;
-                break;
-            default:
-                columnIndex = 0;
-        }
-
-        switching = true;
-        while (switching) {
-            switching = false;
-            rows = table.rows;
-            for (i = 0; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName("TD")[columnIndex];
-                y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
-                if (sortBy === "high-low") {
-                    if (Number(x.innerHTML.replace(/[^0-9.-]+/g,"")) < Number(y.innerHTML.replace(/[^0-9.-]+/g,""))) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                } else if (sortBy === "low-high") {
-                    if (Number(x.innerHTML.replace(/[^0-9.-]+/g,"")) > Number(y.innerHTML.replace(/[^0-9.-]+/g,""))) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                } else {
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
+    // Fetch and render budget categories on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/get-budget-categories', {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            renderBudgetCategories(data.categories);
+        })
+        .catch(error => {
+            console.error('Error fetching budget categories:', error);
+        });
+    });
+        // Chart.js
+        function renderBudgetChart(budgetData) {
+        const ctx = document.getElementById('budgetChart').getContext('2d');
+        const budgetChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: budgetData.map(data => data.category),
+                datasets: [{
+                    label: 'Budget Allocation',
+                    data: budgetData.map(data => data.allocated),
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
+        });
+    }
+
+    // Function to filter transactions
+    function filterTransactions() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const category = document.getElementById('categorySelect').value;
+
+        fetch(`/filter-transactions?start=${startDate}&end=${endDate}&category=${category}`)
+        .then(response => response.json())
+        .then(data => {
+            // Update the transactions list with filtered data
+        })
+        .catch(error => {
+            console.error('Error filtering transactions:', error);
+        });
+    }
+
+    // Function to show notifications
+    function showNotification(message) {
+        // Placeholder for notification logic
+        alert(message);
+    }
+
+    // Handle budget limit alerts
+    function checkBudgetLimits() {
+        fetch('/check-budget-limits')
+        .then(response => response.json())
+        .then(data => {
+            if (data.overBudget) {
+                showNotification('Warning: You are over your budget limit for some categories.');
             }
-        }
+        })
+        .catch(error => {
+            console.error('Error checking budget limits:', error);
+        });
     }
 
-    function showMonthlyData(button) {
-        var categoryRow = button.parentNode.parentNode;
-        var monthlyData = button.nextSibling.nextSibling;
+    // Call checkBudgetLimits periodically
+    setInterval(checkBudgetLimits, 3600000); // Check every hour
 
-        var isOpen = monthlyData.style.display === "block";
+        // Exporting Data to CSV
+function exportToCSV() {
+    fetch('/export-budget-data')
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'budget-data.csv';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => console.error('Error exporting data:', error));
+}
 
-        var allMonthlyData = document.getElementsByClassName("monthly-data");
-        for (var i = 0; i < allMonthlyData.length; i++) {
-            allMonthlyData[i].style.display = "none";
-        }
+// Real-time Data Updates (using WebSockets)
+const socket = new WebSocket('ws://your-backend-url');
+socket.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    updateDashboard(data);
+};
 
-        var allCategoryRows = document.getElementsByClassName("category-row");
-        for (var i = 0; i < allCategoryRows.length; i++) {
-            allCategoryRows[i].classList.remove("highlight");
-        }
+function updateDashboard(data) {
+    // Update your dashboard UI with the new data
+}
 
-        if (!isOpen) {
-            monthlyData.style.display = "block";
-            categoryRow.classList.add("highlight");
-        }
-    }
+// User Preferences
+function saveUserPreferences(preferences) {
+    localStorage.setItem('userPreferences', JSON.stringify(preferences));
+}
+
+function loadUserPreferences() {
+    const preferences = JSON.parse(localStorage.getItem('userPreferences'));
+    // Apply preferences to the dashboard
+}
+
+// Responsive UI Updates
+window.onresize = function() {
+    // Adjust UI elements based on new window size
+    adjustLayout();
+};
+
+function adjustLayout() {
+    // Logic to adjust the layout or content
+}
+
 </script>
-
-</head>
-<body>
-    <div class="container">
-        <h1 style="font-size: 30px; text-align: center;">2023 Budget</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Category
-                        <select id="sort-by" onchange="sortTable()">
-                            <option value="alphabetically">Alphabetically</option>
-                            <option value="high-low">Total Amount High - Low</option>
-                            <option value="low-high">Total Amount Low - High</option>
-                        </select>
-                    </th>
-                    <th>Total Amount</th>
-                    <th>Percentage</th>
-                    <th>Next Year's Budget</th>
-                    <th>New Percentage</th>
-                </tr>
-            </thead>
-            <tbody id="budget-table-body">
-                {% for data in category_totals %}
-                    <tr class="category-row">
-                        <td>
-                            <button class="dropdown-btn" onclick="showMonthlyData(this)">▼</button>
-                            {{ data.Category }}
-                            <table class="monthly-data">
-                                <thead>
-                                    <tr>
-                                        <th>Month</th>
-                                        <th>Amount Spent in 2022</th>
-                                        <th>Budget for 2023</th>
-                                        <th>Percentage</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                   {% for month, amount in monthly_totals[data.Category].items() %}
-    <tr>
-        <td>{{ month }}</td>
-        <td>${{ amount|int }}</td>
-        <td>
-            <input type="range" min="0" max="{{ data.Amount|int }}" value="{{ amount|int }}" class="budget-slider" oninput="updateMonthlyBudget(this)">
-            <span class="budget-display">{{ amount|int }}</span>
-            <button class="lock-btn" onclick="toggleLock(this)">🔓</button>
-        </td>
-        <td class="new-percentage"></td>
-    </tr>
-{% endfor %}
-
-                                </tbody>
-                            </table>
-                        </td>
-                        <td>${{ data.Amount|int }}</td>
-                        <td>{{ ((data.Amount / total_amount) * 100)|round(2) }}%</td>
-                        <td>
-                            <input type="number" class="budget-input" value="{{ data.Amount|int }}" min="0" max="200000" oninput="updateBudget(this)">
-                        </td>
-                        <td class="new-percentage"></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td><strong>Total</strong></td>
-                    <td id="total-amount"></td>
-                    <td></td>
-                    <td id="total-budget"></td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
 </body>
 </html>
-
