@@ -1,0 +1,16 @@
+<div style="width: 793px; height: 1151px; position: relative; background: white">
+  <div style="left: 91px; top: 70px; position: absolute; color: black; font-size: 60px; font-family: Inter; font-weight: 600; line-height: 78px; word-wrap: break-word">Import XLSX/CSV </div>
+  <div style="width: 215px; height: 54px; left: 92px; top: 660px; position: absolute; color: black; font-size: 40px; font-family: Inter; font-weight: 700; line-height: 52px; word-wrap: break-word">Formatting</div>
+  <div style="width: 603px; height: 53px; left: 92px; top: 726px; position: absolute; color: black; font-size: 40px; font-family: Inter; font-weight: 400; line-height: 52px; word-wrap: break-word">Column A: Date (YYYY-MM-DD)</div>
+  <div style="width: 439px; height: 53px; left: 92px; top: 792px; position: absolute; color: black; font-size: 40px; font-family: Inter; font-weight: 400; line-height: 52px; word-wrap: break-word">Column B: Description*</div>
+  <div style="width: 425px; height: 53px; left: 92px; top: 858px; position: absolute; color: black; font-size: 40px; font-family: Inter; font-weight: 400; line-height: 52px; word-wrap: break-word">Column C: Full amount</div>
+  <div style="width: 382px; height: 54px; left: 93px; top: 923px; position: absolute; color: black; font-size: 40px; font-family: Inter; font-weight: 400; line-height: 52px; word-wrap: break-word">Column D: Category</div>
+  <div style="height: 405px; padding-top: 86px; padding-bottom: 75px; padding-left: 130px; padding-right: 130px; left: 92px; top: 204px; position: absolute; background: #FAFAF5; border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid; flex-direction: column; justify-content: flex-end; align-items: center; gap: 27.97px; display: inline-flex">
+    <div style="width: 154.94px; height: 170.03px; background: rgba(0, 0, 0, 0.50)"></div>
+    <div style="width: 342px; height: 46px; color: black; font-size: 40px; font-family: Inter; font-weight: 400; line-height: 52px; word-wrap: break-word">Drag and drop file</div>
+  </div>
+  <div style="padding-top: 14px; padding-bottom: 18px; padding-left: 25px; padding-right: 36px; left: 91px; top: 1028px; position: absolute; background: #FAFAF5; border-radius: 24px; overflow: hidden; border: 2px #E6E6E6 solid; justify-content: flex-start; align-items: center; gap: 176.58px; display: inline-flex">
+    <div style="width: 342px; height: 46px; color: black; font-size: 40px; font-family: Inter; font-weight: 400; line-height: 52px; word-wrap: break-word">See example</div>
+    <div style="width: 22.42px; height: 31.67px; background: black"></div>
+  </div>
+</div>
