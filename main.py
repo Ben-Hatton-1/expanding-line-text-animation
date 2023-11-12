@@ -1,126 +1,124 @@
+
+import http.server
+import socketserver
 import pandas as pd
-from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
+import webbrowser
+import json
+import openai
 
-def month_name(month_number):
-    return datetime(year=1, month=month_number, day=1).strftime('%B')
+# Your OpenAI API key (replace wit your actual key)
+openai.api_key = "your-api-key"
 
-def calculate_monthly_totals(df):
-    previous_year = datetime.now().year - 1
-    df['Date'] = pd.to_datetime(df['Date'])
-    df_prev_year = df[df['Date'].dt.year == previous_year]
+# port to serve on
+PORT = 8000
 
-    category_totals = df_prev_year.groupby('Category')['Amount'].sum().reset_index()
+# handler for the HTTP server
+class CustomHandler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        #  single HTML file when the root is accesed
+        if self.path == '/':
+            self.path = 'report.html' 
+            # any html file name
+        return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
-    category_monthly_totals = df_prev_year.groupby(['Category', df_prev_year['Date'].dt.month])['Amount'].sum().reset_index()
-    category_monthly_totals.columns = ['Category', 'Month', 'Amount']
+    def do_POST(self):
+        #  AJAX POST request here
+        if self.path == '/process-budget':
+            # Parse the file from the POST request
+            length = int(self.headers['content-length'])
+            field_data = self.rfile.read(length)
+            # The field data includes the file content, we need to extract it
 
-    category_monthly_totals_pivot = category_monthly_totals.pivot_table(index='Category', columns='Month', values='Amount', fill_value=0).reset_index()
+            # Mock processing - in practice, you'd parse the file content and perform operations with pandas as needed
+            budget_summary = process_budget_data(field_data)
 
-    result = pd.merge(category_totals, category_monthly_totals_pivot, on='Category')
+            # Generate HTML output6
+            generate_html(budget_summary)
 
-    month_names = {i: month_name(i) for i in range(1, 13)}
-    result.rename(columns=month_names, inplace=True)
+            # Prepare and send the response
+            response = {
+                'status': 'success',
+                'message': 'Budget processed and HTML generated successfully.'
+            }
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(response).encode())
 
-    ordered_cols = ['Category'] + [month_name(i) for i in range(1, 13)]
-    result = result.reindex(columns=ordered_cols)
+        elif self.path == '/chat-with-gpt':
+            # Get the length of the data and read it
+            length = int(self.headers['content-length'])
+            field_data = self.rfile.read(length)
+            data = json.loads(field_data)
 
-    return result, category_totals, category_monthly_totals
+            # Get the prompt from the data
+            prompt = data.get('prompt')
 
-def calculate_next_year_budget(df, category_totals):
-    next_year_budget = category_totals.copy()
-    next_year_budget.rename(columns={'Amount': 'NextYearBudget'}, inplace=True)
-    df_with_budget = pd.merge(df, next_year_budget, on='Category', how='left')
-    return df_with_budget, next_year_budget
+            # Call the function to get the response 
+            response = chat_with_gpt(prompt)
 
-def print_monthly_totals(monthly_totals):
-    print("Monthly Totals:")
-    print(monthly_totals.to_string(index=False))
-    print("\n")
+            # Prepare the response
+            response_data = {'response': response}
 
-def print_total_yearly_amount(category_totals):
-    total_yearly_amount = category_totals['Amount'].sum()
-    print(f"Total Yearly Amount: ${total_yearly_amount:,.2f}")
-    print("\n")
+            # Send the response back to the client
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(response_data).encode())
 
-def render_html_report(template_path, summary_data, monthly_totals, total_next_year_budget, next_year_budget_dict):
-    def intcomma(value):
-        return f'{value:,}'
+# Function to chat with GPT
+def chat_with_gpt(prompt):
+    # Call the OpenAI API
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo", 
+            #whichever model
+            messages=[{"role": "user", "content": prompt}]
+        )
+        # Return the chatbot's response
+        return response.choices[0].message.content.strip()
 
-    def intcomma_float(value):
-        return f'{value:,.0f}'
+    # Catching any OpenAI API errors
+    except openai.error.OpenAIError as e:
+        print(f"API call failed: {e}")
+        if hasattr(e, 'headers'):
+            rate_limit_remaining = e.headers.get('x-rate-limit-remaining')
+            print(f"Rate limit remaining: {rate_limit_remaining}")
+        return None
 
-    month_names = [month_name(month) for month in range(1, 13)]
+# Function to process the budget data (as provided earlier)
+def process_budget_data(file_content):
+    # Simulate reading file content
+    # In practice, you would use pandas to read the file content and process it
+    # eexample:
+    # df = pd.read_csv(io.StringIO(file_content.decode('utf-8')))
+    # budget_summary = df.groupby('Category')['Full amount'].sum().reset_index()
+    # This is a placeholder, so let's just return an empty DataFrame
+    return pd.DataFrame()
 
-    env = Environment(loader=FileSystemLoader('.'))
-    env.filters['intcomma'] = intcomma
-    env.filters['intcomma_float'] = intcomma_float
-    template = env.get_template(template_path)
+# Generate HTML file from the budget data
+def generate_html(budget_data):
+    # Load the Jinja2 template environment
+    file_loader = FileSystemLoader('templates')
+    env = Environment(loader=file_loader)
 
-    total_amount = sum(summary_data['Amount'])
+    # Select the template file
+    template = env.get_template('budget_template.html')
 
-    category_totals = []
-    for _, row in summary_data.iterrows():
-        percentage = (row['Amount'] / total_amount) * 100
-        category_totals.append({
-            'Category': row['Category'],
-            'Amount': row['Amount'],
-            'Percentage': percentage
-        })
+    # Render the template with the budget data
+    output = template.render(budget_data=budget_data.to_dict(orient='records'))
 
-    monthly_totals_dict = {}
-    for _, row in monthly_totals.iterrows():
-        if row['Category'] not in monthly_totals_dict:
-            monthly_totals_dict[row['Category']] = {}
-        for month in month_names:    # Use month_names instead of range(1, 13)
-            monthly_totals_dict[row['Category']][month] = row[month]
+    # Write the rendered HTML to a file
+    with open('budget_output.html', 'w') as f:
+        f.write(output)
 
-    report_html = template.render(
-        category_totals=category_totals,
-        total_amount=total_amount,
-        month_names=month_names,
-        monthly_totals=monthly_totals_dict,
-        total_amount_float=float(total_amount),
-        next_year_budget=df_next_year_budget,
-        total_next_year_budget=total_next_year_budget,
-        max_budget=next_year_budget_dict
-    )
+# If the script is run directly, start the server
+if __name__ == "__main__":
+    # Set the current directory as the server's root
 
-    return report_html
-
-file_path = '#excel_file_name.xlsx'
-dfs = pd.read_excel(file_path, sheet_name=None)
-
-monthly_totals_dict = {}
-category_totals_dict = {}
-category_monthly_totals_dict = {}
-next_year_budget_dict = {}
-for sheet_name, df in dfs.items():
-    monthly_totals, category_totals, category_monthly_totals = calculate_monthly_totals(df)
-    monthly_totals_dict[sheet_name] = monthly_totals
-    category_totals_dict[sheet_name] = category_totals
-    category_monthly_totals_dict[sheet_name] = category_monthly_totals
-
-df_next_year_budget_dict = {}
-total_next_year_budget = 0
-for sheet_name, df in dfs.items():
-    category_totals = category_totals_dict[sheet_name]
-    df_next_year_budget, next_year_budget = calculate_next_year_budget(df, category_totals)
-    df_next_year_budget_dict[sheet_name] = df_next_year_budget
-    next_year_budget_dict[sheet_name] = next_year_budget
-    total_next_year_budget += df_next_year_budget['NextYearBudget'].sum()
-
-html_report = render_html_report('report_template.html', category_totals, monthly_totals, total_next_year_budget, next_year_budget_dict)
-
-monthly_totals = pd.concat(monthly_totals_dict.values())
-category_totals = pd.concat(category_totals_dict.values())
-category_monthly_totals = pd.concat(category_monthly_totals_dict.values())
-df_next_year_budget = pd.concat(df_next_year_budget_dict.values())
-
-print_monthly_totals(monthly_totals)
-print_total_yearly_amount(category_totals)
-
-html_report = render_html_report('report_template.html', category_totals, monthly_totals, total_next_year_budget, next_year_budget_dict)
-
-with open('budget_forecast_report.html', 'w') as f:
-    f.write(html_report)
+    # Start the HTTP server
+    with socketserver.TCPServer(("", PORT), CustomHandler) as httpd:
+        print("serving at port", PORT)
+        webbrowser.open(f'http://localhost:{PORT}/report.html')
+        httpd.serve_forever()
